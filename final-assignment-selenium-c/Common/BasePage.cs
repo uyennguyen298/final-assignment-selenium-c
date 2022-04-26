@@ -60,7 +60,35 @@ namespace final_assignment_selenium_c.Common
 		{
 			getWebElement(driver, locatorType).Click();
 		}
+		public void waitForElementVisible(IWebDriver driver, String locatorType)
+		{
+			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+			explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(getByLocator(locatorType)));
+		}
+		public String getElementText(IWebDriver driver, String locatorType)
+		{
+			return getWebElement(driver, locatorType).Text;
+		}
+		public void sendkeyToElement(IWebDriver driver, String locatorType, String textValue)
+		{
+			IWebElement element = getWebElement(driver, locatorType);
+			element.Clear();
+			element.SendKeys(textValue);
+		}
 
+		public void selectItemInDropdown(IWebDriver driver, String locatorType, String textItem)
+		{
+			SelectElement select = new SelectElement(getWebElement(driver, locatorType));
+			select.SelectByValue(textItem);
+		}
 
+		public void checkToCheckbox(IWebDriver driver, String locatorType)
+		{
+			IWebElement element = getWebElement(driver, locatorType);
+			if (!element.Selected)
+			{
+				element.Click();
+			}
+		}
 	}
 }

@@ -23,6 +23,5 @@ namespace final_assignment_selenium_c.PageObjects
             return PageGeneratorManager.getAuthenticatePage(driver);
         }
 
-
     }
 }

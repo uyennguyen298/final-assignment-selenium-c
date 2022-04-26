@@ -14,5 +14,15 @@ namespace final_assignment_selenium_c.Common
         {
             return new AuthenticationPageObject(driver);
         }
+
+        public static HomePageObject getHomePage(IWebDriver driver)
+        {
+            return new HomePageObject(driver);
+        }
+
+        public static CreateAnAccountPageObject getCreateAnAccountPage(IWebDriver driver)
+        {
+            return new CreateAnAccountPageObject(driver);
+        }
     }
 }

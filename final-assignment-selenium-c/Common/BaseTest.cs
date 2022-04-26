@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,17 @@ namespace final_assignment_selenium_c.Common
 {
     public class BaseTest
     {
-        protected void ChromeDriver()
+        private IWebDriver driver;
+        public void ChromeDriver()
         {
             new DriverManager().SetUpDriver(new ChromeConfig());
-            Constant.Constant.WEBDRIVER = new ChromeDriver();
-            Constant.Constant.WEBDRIVER.Manage().Window.Maximize();
+            driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Navigate().GoToUrl(Constant.Constant.APP_URL);
         }
-
-        protected String getCurrentTimeStamp()
+        public static string getCurrentTimeStamp()
         {
             DateTimeOffset now = DateTime.Now;
             long timeStamp = ((DateTimeOffset)now).ToUnixTimeSeconds(); ;
