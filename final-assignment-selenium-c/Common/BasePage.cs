@@ -14,7 +14,7 @@ namespace final_assignment_selenium_c.Common
     public class BasePage
     {
         private long longTimeout = 30;
-		private By getByLocator(String locatorType)
+		private By getByLocator(string locatorType)
 		{
 			By by = null;
 			if (locatorType.StartsWith("id=") || locatorType.StartsWith("ID=") || locatorType.StartsWith("Id="))
@@ -44,51 +44,100 @@ namespace final_assignment_selenium_c.Common
 			return by;
 		}
 
-		public void waitForElementClickable(IWebDriver driver, String locatorType)
+		public void waitForElementClickable(IWebDriver driver, string locatorType)
         {
             WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
             explicitWait.Until(ExpectedConditions.ElementToBeClickable(getByLocator(locatorType)));
         }
 
-		public IWebElement getWebElement(IWebDriver driver, String locatorType)
+		public IWebElement getWebElement(IWebDriver driver, string locatorType)
 		{
 			return driver.FindElement(getByLocator(locatorType));
 
 		}
 
-		public void clickToElement(IWebDriver driver, String locatorType)
+		public void clickToElement(IWebDriver driver, string locatorType)
 		{
 			getWebElement(driver, locatorType).Click();
 		}
-		public void waitForElementVisible(IWebDriver driver, String locatorType)
+		public void waitForElementVisible(IWebDriver driver, string locatorType)
 		{
 			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
 			explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(getByLocator(locatorType)));
 		}
-		public String getElementText(IWebDriver driver, String locatorType)
+		public string getElementText(IWebDriver driver, string locatorType)
 		{
 			return getWebElement(driver, locatorType).Text;
 		}
-		public void sendkeyToElement(IWebDriver driver, String locatorType, String textValue)
+		public void sendkeyToElement(IWebDriver driver, string locatorType, string textValue)
 		{
 			IWebElement element = getWebElement(driver, locatorType);
 			element.Clear();
 			element.SendKeys(textValue);
 		}
 
-		public void selectItemInDropdown(IWebDriver driver, String locatorType, String textItem)
+		public void selectItemInDropdown(IWebDriver driver, string locatorType, string textItem)
 		{
 			SelectElement select = new SelectElement(getWebElement(driver, locatorType));
 			select.SelectByValue(textItem);
 		}
 
-		public void checkToCheckbox(IWebDriver driver, String locatorType)
+		public void checkToCheckbox(IWebDriver driver, string locatorType)
 		{
 			IWebElement element = getWebElement(driver, locatorType);
 			if (!element.Selected)
 			{
 				element.Click();
 			}
+		}
+
+		private string getDynamicXpath(string locatorType, string dynamicValues)
+		{
+			if (locatorType.StartsWith("xpath=") || locatorType.StartsWith("XPATH=") || locatorType.StartsWith("Xpath="))
+			{
+                locatorType = string.Format(locatorType, dynamicValues);
+			}
+			return locatorType;
+		}
+
+		private string getDynamicXpath(string locatorType, string dynamicValues1, string dynamicValues2)
+		{
+			if (locatorType.StartsWith("xpath=") || locatorType.StartsWith("XPATH=") || locatorType.StartsWith("Xpath="))
+			{
+				locatorType = string.Format(locatorType, dynamicValues1, dynamicValues2);
+			}
+			return locatorType;
+		}
+		public void clickToElement(IWebDriver driver, string locatorType, string dynamicValues)
+		{
+			getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).Click();
+		}
+
+		public void sendkeyToElement(IWebDriver driver, string locatorType, string textValue, string dynamicValues1, string dynamicValues2)
+		{
+			IWebElement element = getWebElement(driver, getDynamicXpath(locatorType, dynamicValues1, dynamicValues2));
+			element.Clear();
+			element.SendKeys(textValue);
+		}
+		public void waitForAllElementVisible(IWebDriver driver, string locatorType, string dynamicValues)
+		{
+			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+			explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
+		}
+
+		public void checkToCheckbox(IWebDriver driver, string locatorType, string dynamicValues)
+		{
+			IWebElement element = getWebElement(driver, getDynamicXpath(locatorType, dynamicValues));
+			if (!element.Selected)
+			{
+				element.Click();
+			}
+		}
+
+		public void selectItemInDropdown(IWebDriver driver, string locatorType, string textItem, string dynamicValues)
+		{
+			SelectElement select = new SelectElement(getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)));
+			select.SelectByValue(textItem);
 		}
 	}
 }

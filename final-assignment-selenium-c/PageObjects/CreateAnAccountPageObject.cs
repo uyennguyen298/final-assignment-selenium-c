@@ -19,7 +19,7 @@ namespace final_assignment_selenium_c.PageObjects
         public void selectTitleCheckbox()
         {
             waitForElementVisible(driver, CreateAnAccountPageUI.TITLE_RADIO_BUTTON);
-            checkToCheckbox(driver, CreateAnAccountPageUI.TITLE_RADIO_BUTTON);
+            checkToCheckbox(driver, CreateAnAccountPageUI.TITLE_RADIO_BUTTON, "Mrs.");
         }
 
         public void selectDateDropdownlist(string dob_date)
@@ -42,26 +42,26 @@ namespace final_assignment_selenium_c.PageObjects
 
         public void selectStateDropdownlist(string state)
         {
-            waitForElementVisible(driver, CreateAnAccountPageUI.STATE_DROPDOWN_LIST);
-            selectItemInDropdown(driver, CreateAnAccountPageUI.STATE_DROPDOWN_LIST, state);
+            waitForElementVisible(driver, CreateAnAccountPageUI.DROPDOWN);
+            selectItemInDropdown(driver, CreateAnAccountPageUI.DROPDOWN, state,"State");
         }
 
         public void selectCountryDropdownlist(string country)
         {
-            waitForElementVisible(driver, CreateAnAccountPageUI.COUNTRY_DROPDOWN_LIST);
-            selectItemInDropdown(driver, CreateAnAccountPageUI.COUNTRY_DROPDOWN_LIST, country);
+            waitForElementVisible(driver, CreateAnAccountPageUI.DROPDOWN);
+            selectItemInDropdown(driver, CreateAnAccountPageUI.DROPDOWN, country, "Country");
         }
 
-        public void selectSignUpCheckbox()
+        public void selectNewsLetterCheckbox()
         {
-            waitForElementVisible(driver, CreateAnAccountPageUI.SIGN_UP_CHECK_BOX);
-            checkToCheckbox(driver, CreateAnAccountPageUI.SIGN_UP_CHECK_BOX);
+            waitForElementVisible(driver, CreateAnAccountPageUI.NEWSLETTER_CHECKBOX);
+            checkToCheckbox(driver, CreateAnAccountPageUI.NEWSLETTER_CHECKBOX);
         }
 
         public void selectReceiveSpecialOffersCheckbox()
         {
-            waitForElementVisible(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECK_BOX);
-            checkToCheckbox(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECK_BOX);
+            waitForElementVisible(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECKBOX);
+            checkToCheckbox(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECKBOX);
         }
 
         public void clickToRegisterButton()
@@ -72,8 +72,8 @@ namespace final_assignment_selenium_c.PageObjects
 
         public void inputToFirstNameTextbox(String firstName)
         {
-            waitForElementVisible(driver, CreateAnAccountPageUI.PERSONAL_INFO_FIRST_NAME_TEXT_BOX);
-            sendkeyToElement(driver, CreateAnAccountPageUI.PERSONAL_INFO_FIRST_NAME_TEXT_BOX, firstName);
+            waitForElementVisible(driver, CreateAnAccountPageUI.TEXTBOX);
+            sendkeyToElement(driver, CreateAnAccountPageUI.TEXTBOX, firstName, "Your personal information","First name");
         }
 
         public void inputToLastNameTextbox(String lastName)

@@ -49,7 +49,7 @@ namespace final_assignment_selenium_c.TestCases
             createAnAccountPage.selectDateDropdownlist(Utilities.TestData.dob_date);
             createAnAccountPage.selectMonthDropdownlist(Utilities.TestData.dob_month);
             createAnAccountPage.selectYearDropdownlist(Utilities.TestData.dob_year);
-            createAnAccountPage.selectSignUpCheckbox();
+            createAnAccountPage.selectNewsLetterCheckbox();
             createAnAccountPage.selectReceiveSpecialOffersCheckbox();
             createAnAccountPage.inputToCompanyTextbox(Utilities.TestData.company);
             createAnAccountPage.inputToAddressTextbox(Utilities.TestData.address);
