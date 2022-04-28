@@ -8,8 +8,7 @@ namespace final_assignment_selenium_c.PageUIs
 {
     public class AuthenticationPageUI
     {
-        public static String EMAIL_ADDRESS_TEXT_BOX = "";
-        public static String CREATE_AN_ACCOUNT_BUTTON = "xpath=//label[contains(.,'{0}')]//..//select";
-
+        public static string EMAIL_ADDRESS_TEXT_BOX = "id=email_create";
+        public static string CREATE_AN_ACCOUNT_BUTTON = "id=SubmitCreate";
     }
 }

@@ -17,7 +17,7 @@ namespace final_assignment_selenium_c.PageObjects
             this.driver = driver;
         }
 
-        public void inputToEmailAddressTextbox(String emailAddress)
+        public void inputToEmailAddressTextbox(string emailAddress)
         {
             waitForElementVisible(driver, AuthenticationPageUI.EMAIL_ADDRESS_TEXT_BOX);
             sendkeyToElement(driver, AuthenticationPageUI.EMAIL_ADDRESS_TEXT_BOX, emailAddress);

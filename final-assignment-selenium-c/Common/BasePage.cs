@@ -50,10 +50,15 @@ namespace final_assignment_selenium_c.Common
             explicitWait.Until(ExpectedConditions.ElementToBeClickable(getByLocator(locatorType)));
         }
 
+		public void waitForElementClickable(IWebDriver driver, string locatorType,string dynamicValues)
+		{
+			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+			explicitWait.Until(ExpectedConditions.ElementToBeClickable(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
+		}
+
 		public IWebElement getWebElement(IWebDriver driver, string locatorType)
 		{
 			return driver.FindElement(getByLocator(locatorType));
-
 		}
 
 		public void clickToElement(IWebDriver driver, string locatorType)
@@ -63,10 +68,11 @@ namespace final_assignment_selenium_c.Common
 		public void waitForElementVisible(IWebDriver driver, string locatorType)
 		{
 			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
-			explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(getByLocator(locatorType)));
+			explicitWait.Until(ExpectedConditions.ElementIsVisible(getByLocator(locatorType)));
 		}
 		public string getElementText(IWebDriver driver, string locatorType)
 		{
+			
 			return getWebElement(driver, locatorType).Text;
 		}
 		public void sendkeyToElement(IWebDriver driver, string locatorType, string textValue)
@@ -76,19 +82,58 @@ namespace final_assignment_selenium_c.Common
 			element.SendKeys(textValue);
 		}
 
-		public void selectItemInDropdown(IWebDriver driver, string locatorType, string textItem)
+		public void selectItemInDropdown(IWebDriver driver, string parentXpath, string childXpath, string expectedItem)
 		{
-			SelectElement select = new SelectElement(getWebElement(driver, locatorType));
-			select.SelectByValue(textItem);
+            clickToElement(driver, parentXpath);
+
+            WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+            IList<IWebElement> allItems = explicitWait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(getByLocator(childXpath)));
+
+
+            foreach (var item in allItems)
+            {
+                if (item.Text.Trim().Equals(expectedItem))
+                {
+                    if (item.Displayed == true)
+                    {
+                        IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+                        Console.WriteLine("---Scroll to element---");
+                        jsExecutor.ExecuteScript("arguments[0].scrollIntoView(true);", item);
+                    }
+                    item.Click();
+                    break;
+                }
+            }
+        }
+
+		public void selectItemInDropdown(IWebDriver driver, string parentXpath, string childXpath, string expectedItem,string dynamicParent, string dynamicChild)
+		{
+			clickToElement(driver, getDynamicXpath(parentXpath, dynamicParent));
+
+			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+			IList<IWebElement> allItems = explicitWait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(getByLocator(getDynamicXpath(childXpath,dynamicChild))));
+
+
+			foreach (var item in allItems)
+			{
+				if (item.Text.Trim().Equals(expectedItem))
+				{
+					if (item.Displayed == true)
+					{
+						IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+						Console.WriteLine("---Scroll to element---");
+						jsExecutor.ExecuteScript("arguments[0].scrollIntoView(true);", item);
+					}
+					item.Click();
+					break;
+				}
+			}
 		}
 
 		public void checkToCheckbox(IWebDriver driver, string locatorType)
 		{
 			IWebElement element = getWebElement(driver, locatorType);
-			if (!element.Selected)
-			{
-				element.Click();
-			}
+			element.Click();
 		}
 
 		private string getDynamicXpath(string locatorType, string dynamicValues)
@@ -119,25 +164,39 @@ namespace final_assignment_selenium_c.Common
 			element.Clear();
 			element.SendKeys(textValue);
 		}
-		public void waitForAllElementVisible(IWebDriver driver, string locatorType, string dynamicValues)
+		public void waitForElementVisible(IWebDriver driver, string locatorType, string dynamicValues)
 		{
 			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
-			explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
+			explicitWait.Until(ExpectedConditions.ElementIsVisible(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
+		}
+
+		public void waitForElementVisible(IWebDriver driver, string locatorType, string dynamicValues1, string dynamicValues2)
+		{
+			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+			explicitWait.Until(ExpectedConditions.ElementIsVisible(getByLocator(getDynamicXpath(locatorType, dynamicValues1, dynamicValues2))));
 		}
 
 		public void checkToCheckbox(IWebDriver driver, string locatorType, string dynamicValues)
 		{
-			IWebElement element = getWebElement(driver, getDynamicXpath(locatorType, dynamicValues));
-			if (!element.Selected)
-			{
-				element.Click();
-			}
+			getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)).Click();
 		}
 
-		public void selectItemInDropdown(IWebDriver driver, string locatorType, string textItem, string dynamicValues)
+		public static string getCurrentTimeStamp()
 		{
-			SelectElement select = new SelectElement(getWebElement(driver, getDynamicXpath(locatorType, dynamicValues)));
-			select.SelectByValue(textItem);
+			DateTimeOffset now = DateTime.Now;
+			long timeStamp = ((DateTimeOffset)now).ToUnixTimeSeconds(); ;
+			return timeStamp.ToString();
+		}
+
+		public void scrollToElementByJS(IWebDriver driver, string locatorType)
+		{
+			IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor) driver;
+			jsExecutor.ExecuteScript("arguments[0].scrollIntoView(true);", getWebElement(driver,locatorType));
+		}
+
+		public bool isElementDisplayed(IWebDriver driver, string locatorType)
+		{
+			return getWebElement(driver, locatorType).Displayed;
 		}
 	}
 }

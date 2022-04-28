@@ -8,6 +8,6 @@ namespace final_assignment_selenium_c.DataObjects
 {
     public class HomePageUI
     {
-        public static String SIGN_IN_LINK = "";
+        public static String SIGN_IN_LINK = "xpath=//a[@class='login']";
     }
 }

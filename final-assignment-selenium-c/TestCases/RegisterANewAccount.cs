@@ -2,27 +2,37 @@
 using final_assignment_selenium_c.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace final_assignment_selenium_c.TestCases
 {
-    class RegisterANewAccount : BaseTest
+    class RegisterANewAccount : BasePage
     {
         private IWebDriver driver;
         private HomePageObject homePage;
         private AuthenticationPageObject authenticationPage;
         private CreateAnAccountPageObject createAnAccountPage;
+        private MyAccountPageObject myAccountPage;
+
 
         [SetUp]
         public void SetUp()
         {
-            ChromeDriver();
-           
-    }
+            new DriverManager().SetUpDriver(new ChromeConfig());
+            driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver.Navigate().GoToUrl(Constant.Constant.APP_URL);
+
+        }
         [TearDown]
         public void TearDown()
         {
@@ -63,8 +73,9 @@ namespace final_assignment_selenium_c.TestCases
             createAnAccountPage.inputToMobilePhoneTextbox(Utilities.TestData.mobilePhone);
             createAnAccountPage.inputToAssignAnAddressTextbox(Utilities.TestData.assignAnAddress);
             //6. Register page: Click on Register button
-            createAnAccountPage.clickToRegisterButton();
+            myAccountPage = createAnAccountPage.clickToRegisterButton();
             //7. My Account page: Validate user is created
+            Assert.IsTrue(myAccountPage.isMyAccountHeaderIsDisplayed());
 
         }
     }

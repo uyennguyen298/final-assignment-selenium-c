@@ -24,5 +24,10 @@ namespace final_assignment_selenium_c.Common
         {
             return new CreateAnAccountPageObject(driver);
         }
+
+        public static MyAccountPageObject getMyAccountPage(IWebDriver driver)
+        {
+            return new MyAccountPageObject(driver);
+        }
     }
 }

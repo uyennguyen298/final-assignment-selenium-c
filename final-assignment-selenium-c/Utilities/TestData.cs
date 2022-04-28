@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace final_assignment_selenium_c.Utilities
 {
-    public class TestData : BaseTest
+    public class TestData : BasePage
     {
         public static string emailAddress = "uyentesting" + getCurrentTimeStamp() + "@gmail.com";
         public static string firstName = "uyen";
@@ -19,7 +19,7 @@ namespace final_assignment_selenium_c.Utilities
         public static string dob_year = "1997";
         public static string company = "Kido Corporation";
         public static string address = "TPHCM";
-        public static string addressLine2 = "TPHC";
+        public static string addressLine2 = "TPHCM";
         public static string city = "Vietnam";
         public static string state = "Ohio";
         public static string country = "United States";
