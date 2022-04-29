@@ -29,5 +29,13 @@ namespace final_assignment_selenium_c.Common
         {
             return new MyAccountPageObject(driver);
         }
+        public static TshirtPageObject getTshirtPage(IWebDriver driver)
+        {
+            return new TshirtPageObject(driver);
+        }
+        public static SearchPageObject getSearchPage(IWebDriver driver)
+        {
+            return new SearchPageObject(driver);
+        }
     }
 }

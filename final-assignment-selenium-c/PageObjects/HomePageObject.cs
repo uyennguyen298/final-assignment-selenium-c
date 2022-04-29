@@ -22,6 +22,19 @@ namespace final_assignment_selenium_c.PageObjects
             clickToElement(driver, HomePageUI.SIGN_IN_LINK);
             return PageGeneratorManager.getAuthenticatePage(driver);
         }
+        public void hoverOnWomanLink()
+        {
+            //waitForElementExist(driver, HomePageUI.WOMEN_LINK,"Women");
+            hoverOnElement(driver, HomePageUI.WOMEN_LINK, "Women");
+        }
+        public TshirtPageObject clickToTshirtSubMenu()
+        {
+            waitForElementClickable(driver, HomePageUI.TSHIRTS_SUBMENU,"Women","Tops","T-shirts");
+            clickToElement(driver, HomePageUI.TSHIRTS_SUBMENU,"Women", "Tops", "T-shirts");
+            return PageGeneratorManager.getTshirtPage(driver);
+        }
+
+
 
     }
 }

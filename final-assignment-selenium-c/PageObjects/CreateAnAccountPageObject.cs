@@ -25,29 +25,32 @@ namespace final_assignment_selenium_c.PageObjects
 
         public void selectDateDropdownlist(string dob_date)
         {
+            waitForElementExist(driver, CreateAnAccountPageUI.DOB_DATE, CreateAnAccountPageUI.DOB_DATE_OPTION, dob_date);
             selectItemInDropdown(driver, CreateAnAccountPageUI.DOB_DATE, CreateAnAccountPageUI.DOB_DATE_OPTION, dob_date);
         }
 
         public void selectMonthDropdownlist(string dob_month)
         {
+            waitForElementExist(driver, CreateAnAccountPageUI.DOB_MONTH, CreateAnAccountPageUI.DOB_MONTH_OPTION, dob_month);
             selectItemInDropdown(driver, CreateAnAccountPageUI.DOB_MONTH, CreateAnAccountPageUI.DOB_MONTH_OPTION, dob_month);
         }
 
         public void selectYearDropdownlist(string dob_year)
         {
+            waitForElementExist(driver, CreateAnAccountPageUI.DOB_YEAR, CreateAnAccountPageUI.DOB_YEAR_OPTION, dob_year);
             selectItemInDropdown(driver, CreateAnAccountPageUI.DOB_YEAR, CreateAnAccountPageUI.DOB_YEAR_OPTION, dob_year);
         }
 
         public void selectStateDropdownlist(string state)
         {
-            //waitForElementVisible(driver, CreateAnAccountPageUI.DROPDOWN, "State");
-            selectItemInDropdown(driver, CreateAnAccountPageUI.DROPDOWN, CreateAnAccountPageUI.DROPDOWN_OPTION, state, "State", "State");
+            waitForElementExist(driver, CreateAnAccountPageUI.DROPDOWN,"State");
+            selectItemInDropdown(driver, CreateAnAccountPageUI.DROPDOWN, CreateAnAccountPageUI.DROPDOWN_OPTION, state, "State");
         }
 
         public void selectCountryDropdownlist(string country)
         {
-            //waitForElementVisible(driver, CreateAnAccountPageUI.DROPDOWN, "Country");
-            selectItemInDropdown(driver, CreateAnAccountPageUI.DROPDOWN, CreateAnAccountPageUI.DROPDOWN_OPTION, country, "Country", "Country");
+            waitForElementExist(driver, CreateAnAccountPageUI.DROPDOWN, "Country");
+            selectItemInDropdown(driver, CreateAnAccountPageUI.DROPDOWN, CreateAnAccountPageUI.DROPDOWN_OPTION, country, "Country");
         }
 
         public void selectNewsLetterCheckbox()
@@ -143,5 +146,31 @@ namespace final_assignment_selenium_c.PageObjects
             waitForElementVisible(driver, CreateAnAccountPageUI.TEXTBOX, "Your address", "Assign an address");
             sendkeyToElement(driver, CreateAnAccountPageUI.TEXTBOX, assignAnAddress, "Your address", "Assign an address");
         }
+
+        public void inputToAllFields()
+        {
+            selectTitleCheckbox();
+            inputToFirstNameTextbox(Utilities.TestData.firstName);
+            inputToLastNameTextbox(Utilities.TestData.lastName);
+            inputToEmailAddressTextbox(Utilities.TestData.emailAddress);
+            inputToPasswordTextbox(Utilities.TestData.password);
+            selectDateDropdownlist(Utilities.TestData.dob_date);
+            selectMonthDropdownlist(Utilities.TestData.dob_month);
+            selectYearDropdownlist(Utilities.TestData.dob_year);
+            selectNewsLetterCheckbox();
+            selectReceiveSpecialOffersCheckbox();
+            inputToCompanyTextbox(Utilities.TestData.company);
+            inputToAddressTextbox(Utilities.TestData.address);
+            inputToAddressLine2Textbox(Utilities.TestData.addressLine2);
+            inputToCityTextbox(Utilities.TestData.city);
+            selectStateDropdownlist(Utilities.TestData.state);
+            inputToZipPostalCodeTextbox(Utilities.TestData.zipPostalCode);
+            selectCountryDropdownlist(Utilities.TestData.country);
+            inputToAdditionalInformationTextbox(Utilities.TestData.additionalInformation);
+            inputToHomePhoneTextbox(Utilities.TestData.homePhone);
+            inputToMobilePhoneTextbox(Utilities.TestData.mobilePhone);
+            inputToAssignAnAddressTextbox(Utilities.TestData.assignAnAddress);
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿ using final_assignment_selenium_c.Common;
+﻿using final_assignment_selenium_c.Common;
 using final_assignment_selenium_c.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -13,13 +13,13 @@ using WebDriverManager.DriverConfigs.Impl;
 
 namespace final_assignment_selenium_c.TestCases
 {
-    class RegisterANewAccount : BasePage
+    public class SearchProduct
     {
         private IWebDriver driver;
         private HomePageObject homePage;
-        private AuthenticationPageObject authenticationPage;
-        private CreateAnAccountPageObject createAnAccountPage;
-        private MyAccountPageObject myAccountPage;
+        private TshirtPageObject tshirtPage;
+        private SearchPageObject searchPage;
+
 
 
         [SetUp]
@@ -40,23 +40,21 @@ namespace final_assignment_selenium_c.TestCases
         }
 
         [Test]
-        public void SC01_RegisterANewAccount()
+        public void SC02_SearchProduct()
         {
             //1. Home page: Open this URL
             homePage = PageGeneratorManager.getHomePage(driver);
-            //2. Home page: Click on Sign in Link
-            authenticationPage = homePage.openAuthenticatePage();
-            //3. Authenticate page: Input Email
-            authenticationPage.inputToEmailAddressTextbox(Utilities.TestData.emailAddress);
-            //4. Authenticate page: Click on Create an account button
-            createAnAccountPage = authenticationPage.clickToCreateAnAccountButton();
-            //5. Register page: Enter information
-            createAnAccountPage.inputToAllFields();
-            //6. Register page: Click on Register button
-            myAccountPage = createAnAccountPage.clickToRegisterButton();
-            //7. My Account page: Validate user is created
-            Assert.IsTrue(myAccountPage.isMyAccountHeaderIsDisplayed());
+            //2. Home page: Move your cursor over Women's link
+            homePage.hoverOnWomanLink();
+            //3. Home page: Click on submenu 'T-shirts'
+            tshirtPage = homePage.clickToTshirtSubMenu();
+            //4. T-shirts page: Get name/text the first product displayed on the page
+            //5. T-shirts page: Enter name into search bar & click on Search button
+            string nameOfProduct = tshirtPage.getNameOfProduct();
+            tshirtPage.inputToSearchTextbox(nameOfProduct);
+            searchPage = tshirtPage.clickToSearchButton();
+            //6. Search page: Verify name + price
+            Assert.AreEqual(nameOfProduct, tshirtPage.getNameOfProduct());
         }
-
     }
 }
