@@ -24,7 +24,7 @@ namespace final_assignment_selenium_c.PageObjects
         }
         public void hoverOnWomanLink()
         {
-            //waitForElementExist(driver, HomePageUI.WOMEN_LINK,"Women");
+            waitForElementExist(driver, HomePageUI.WOMEN_LINK,"Women");
             hoverOnElement(driver, HomePageUI.WOMEN_LINK, "Women");
         }
         public TshirtPageObject clickToTshirtSubMenu()

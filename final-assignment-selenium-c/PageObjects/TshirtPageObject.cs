@@ -19,9 +19,9 @@ namespace final_assignment_selenium_c.PageObjects
         }
         public String getNameOfProduct()
         {
-            waitForElementVisible(driver, TshirtPageUI.TSHIRT_ITEM_NAME);
-            scrollToElementByJS(driver, TshirtPageUI.TSHIRT_ITEM_NAME);
-            return getElementText(driver, TshirtPageUI.TSHIRT_ITEM_NAME);
+            waitForElementVisible(driver, TshirtPageUI.TSHIRT_ITEM_LIST,"T-shirts");
+            scrollToElementByJS(driver, TshirtPageUI.TSHIRT_ITEM_LIST, "T-shirts");
+            return getFirstItemInList(driver, TshirtPageUI.TSHIRT_ITEM_LIST,"T-shirts");
         }
         public void inputToSearchTextbox(String searchValue)
         {

@@ -162,7 +162,7 @@ namespace final_assignment_selenium_c.Common
 			explicitWait.Until(ExpectedConditions.ElementIsVisible(getByLocator(getDynamicXpath(locatorType, dynamicValues))));
 		}
 
-		public void waitForAllElementVisible(IWebDriver driver, String locatorType)
+		public void waitForAllElementVisible(IWebDriver driver, string locatorType)
 		{
 			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
 			explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(getByLocator(locatorType)));
@@ -198,6 +198,12 @@ namespace final_assignment_selenium_c.Common
 			jsExecutor.ExecuteScript("arguments[0].scrollIntoView(true);", getWebElement(driver,locatorType));
 		}
 
+		public void scrollToElementByJS(IWebDriver driver, string locatorType,params string[] dynamicValues)
+		{
+			IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+			jsExecutor.ExecuteScript("arguments[0].scrollIntoView(true);", getWebElement(driver, getDynamicXpath(locatorType,dynamicValues)));
+		}
+
 		public bool isElementDisplayed(IWebDriver driver, string locatorType)
 		{
 			return getWebElement(driver, locatorType).Displayed;
@@ -217,6 +223,12 @@ namespace final_assignment_selenium_c.Common
 		{
 			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
 			IList<IWebElement> allItems = explicitWait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(getByLocator(locatorType)));
+			return allItems.First().Text;
+		}
+		public string getFirstItemInList(IWebDriver driver, string locatorType, params string[] dynamicValues)
+		{
+			WebDriverWait explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+			IList<IWebElement> allItems = explicitWait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(getByLocator(getDynamicXpath(locatorType,dynamicValues))));
 			return allItems.First().Text;
 		}
 

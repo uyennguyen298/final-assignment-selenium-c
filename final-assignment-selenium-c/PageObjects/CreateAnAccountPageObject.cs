@@ -56,14 +56,14 @@ namespace final_assignment_selenium_c.PageObjects
         public void selectNewsLetterCheckbox()
         {
             scrollToElementByJS(driver, CreateAnAccountPageUI.NEWSLETTER_CHECKBOX);
-            //waitForElementClickable(driver, CreateAnAccountPageUI.NEWSLETTER_CHECKBOX);
+            waitForElementExist(driver, CreateAnAccountPageUI.NEWSLETTER_CHECKBOX);
             checkToCheckbox(driver, CreateAnAccountPageUI.NEWSLETTER_CHECKBOX);
         }
 
         public void selectReceiveSpecialOffersCheckbox()
         {
             scrollToElementByJS(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECKBOX);
-            //waitForElementClickable(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECKBOX);
+            waitForElementExist(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECKBOX);
             checkToCheckbox(driver, CreateAnAccountPageUI.RECEIVE_SPECIAL_OFFERS_CHECKBOX);
         }
 

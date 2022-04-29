@@ -50,11 +50,11 @@ namespace final_assignment_selenium_c.TestCases
             tshirtPage = homePage.clickToTshirtSubMenu();
             //4. T-shirts page: Get name/text the first product displayed on the page
             //5. T-shirts page: Enter name into search bar & click on Search button
-            string nameOfProduct = tshirtPage.getNameOfProduct();
-            tshirtPage.inputToSearchTextbox(nameOfProduct);
+            string expectedProductName = tshirtPage.getNameOfProduct();
+            tshirtPage.inputToSearchTextbox(expectedProductName);
             searchPage = tshirtPage.clickToSearchButton();
             //6. Search page: Verify name + price
-            Assert.AreEqual(nameOfProduct, tshirtPage.getNameOfProduct());
+            Assert.AreEqual(expectedProductName, tshirtPage.getNameOfProduct());
         }
     }
 }

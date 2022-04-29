@@ -19,7 +19,6 @@ namespace final_assignment_selenium_c.PageObjects
         public String getNameOfProduct()
         {
             waitForAllElementVisible(driver, SearchPageUI.TSHIRT_ITEM_LIST);
-            
             return getFirstItemInList(driver, SearchPageUI.TSHIRT_ITEM_LIST);
         }
 
