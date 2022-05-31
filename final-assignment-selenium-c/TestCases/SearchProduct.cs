@@ -1,6 +1,10 @@
-﻿using final_assignment_selenium_c.Common;
+﻿using AventStack.ExtentReports;
+using ExtentReportTest.Utils.ReportUtil;
+using final_assignment_selenium_c.Common;
 using final_assignment_selenium_c.PageObjects;
+using final_assignment_selenium_c.Utilities.ReportUtil;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -20,7 +24,17 @@ namespace final_assignment_selenium_c.TestCases
         private TshirtPageObject tshirtPage;
         private SearchPageObject searchPage;
 
+        [OneTimeSetUp]
+        public void GlobalSetup()
+        {
+            ExtentTestManager.CreateParentTest(GetType().Name);
+        }
 
+        [OneTimeTearDown]
+        public void GlobalTeardown()
+        {
+            ExtentService.GetExtent().Flush();
+        }
 
         [SetUp]
         public void SetUp()
@@ -36,7 +50,46 @@ namespace final_assignment_selenium_c.TestCases
         [TearDown]
         public void TearDown()
         {
+            try
+            {
+                var status = TestContext.CurrentContext.Result.Outcome.Status;
+                var errorMessage = string.IsNullOrEmpty(TestContext.CurrentContext.Result.Message)
+                    ? ""
+                    : string.Format("<pre>{0}</pre>", TestContext.CurrentContext.Result.Message);
+
+                var stackTrace = string.IsNullOrEmpty(TestContext.CurrentContext.Result.StackTrace)
+                    ? ""
+                    : string.Format("<pre>{0}</pre>", TestContext.CurrentContext.Result.StackTrace);
+
+                switch (status)
+                {
+                    case TestStatus.Failed:
+                        ReportLog.Fail("Test Failed");
+                        ReportLog.Fail(errorMessage);
+                        ReportLog.Fail(stackTrace);
+                        ReportLog.Fail("Screenshot", CaptureScreenshot(TestContext.CurrentContext.Test.Name));
+                        break;
+
+                    case TestStatus.Skipped:
+                        ReportLog.Skip("Test Skipped");
+                        break;
+                    case TestStatus.Passed:
+                        ReportLog.Pass("Test Passed");
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Exception:" + e);
+            }
             driver.Quit();
+        }
+        public MediaEntityModelProvider CaptureScreenshot(string name)
+        {
+            var screenshot = ((ITakesScreenshot)driver).GetScreenshot().AsBase64EncodedString;
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, name).Build();
         }
 
         [Test]
@@ -54,7 +107,7 @@ namespace final_assignment_selenium_c.TestCases
             tshirtPage.inputToSearchTextbox(expectedProductName);
             searchPage = tshirtPage.clickToSearchButton();
             //6. Search page: Verify name + price
-            Assert.AreEqual(expectedProductName, tshirtPage.getNameOfProduct());
+            Assert.AreEqual(expectedProductName, "xx");
         }
     }
 }

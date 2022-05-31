@@ -1,6 +1,10 @@
-﻿ using final_assignment_selenium_c.Common;
+﻿using AventStack.ExtentReports;
+using ExtentReportTest.Utils.ReportUtil;
+using final_assignment_selenium_c.Common;
 using final_assignment_selenium_c.PageObjects;
+using final_assignment_selenium_c.Utilities.ReportUtil;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -36,7 +40,13 @@ namespace final_assignment_selenium_c.TestCases
         [TearDown]
         public void TearDown()
         {
-            driver.Quit();
+                driver.Quit();
+        }
+
+        public MediaEntityModelProvider CaptureScreenshot(string name)
+        {
+            var screenshot = ((ITakesScreenshot)driver).GetScreenshot().AsBase64EncodedString;
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, name).Build();
         }
 
         [Test]
