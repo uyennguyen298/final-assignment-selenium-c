@@ -39,6 +39,7 @@ namespace final_assignment_selenium_c.TestCases
         [SetUp]
         public void SetUp()
         {
+            ExtentTestManager.CreateTest(TestContext.CurrentContext.Test.Name);
             new DriverManager().SetUpDriver(new ChromeConfig());
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
